@@ -1,0 +1,37 @@
+image:
+  registry: "c5diagnosticsregistry.azurecr.io"
+  tag: "5.0.0.0-Beta3-HC01"
+imagePullSecrets:
+  - cred04
+bootstrap:
+  kafka:
+    replicas: 1
+    partitions: 10
+kafka:
+  bootstrapServers: "kafka:9092"
+  sasl:
+    enabled: true
+    username:
+      value: "user"
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: "kafka-jaas"
+          key: "client-passwords"
+  tls:
+    enabled: true
+    truststore:
+      valueFrom:
+        secretKeyRef:
+          name: "kafka-0-tls"
+          key: "ca.crt"
+db:
+  cluster:
+    host: "postgres-postgresql"
+    username:
+      value: "user"
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: "postgres-postgresql"
+          key: "password"
