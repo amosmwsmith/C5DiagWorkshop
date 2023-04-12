@@ -1,73 +1,94 @@
-# C5DiagWorkshop Deployment Steps - CORDA DEPLOYMENT
+# C5DiagWorkshop Deployment Steps - CORDAPP DEPLOYMENT
 
-Step 1: (Optional) Create container registry in Azure to store images. N.B This should be done on your client machine not the VM by following the steps below:
+## Step 1 - download the CorDapp from the repository to your local machine in a new folder named "c5_beta3_hc01"
 
-1. Download the worker images:	
+```
+https://github.com/amosmwsmith/C5DiagWorkshop/blob/main/deployment/cordapp/c5-cordapp-sample-kotlin.zip
+```
 
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-worker-images-Beta3-HC01.tar
+## Step 2 - cd into that folder and extract the contents of the zip into that folder
 
-2. Load the docker images into your local docker instance:
+## Step 3 - create a new folder called "beta3" and cd into that folder
 
-docker load -i corda-worker-images-Beta3-HC01.tar
+## Step 4 - open a terminal and run the below commands to pull the required images for the build:
 
-3. Log into your container registry:
+### 1. Download Helm charts
+```
+   wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-0.4.0.tgz 
+```
 
-docker login [registry name]
+### 2. Download Dev Pack
+```
+wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/cordApp-dev-pack-Beta3-HC01.tar.gz
+```
 
-4. Download push script in the git hub repository here:
+### 3. Download Worker Images
+```
+https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-worker-images-Beta3-HC01.tar
+```
 
-git clone git@github.com:amosmwsmith/C5DiagWorkshop.git
+### 4. Download Platform Jars
+```
+https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/platform-jars-Beta3-HC01.tar.gz
+```
 
-5. Run the script to push the images
+### 5. Extract platform jars
 
-./push.sh
+```
+tar -xzvf  platform-jars-Beta3-HC01.tar.gz
+```
 
-Step 2: Download the helm charts for Beta3 HC01 (Run on the Azure VM):
+### 6. Extract Dev Pack
 
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-0.4.0.tgz
+```
+tar -xzvf  cordApp-dev-pack-Beta3-HC01.tar.gz
+```
 
+## Step 5 - create environment variable to store the path to the beta3 folder
 
-Step 3 - Create namespace corda and set as default (Run on Azure VM)
+```
+export C5_DEPS = your_local_path/c5_beta3_hc01/beta3
+```
 
-kubectl create namespace corda
-kubectl config set-context --current --namespace=corda
+## Step 6 - create environment variable to store the path to the beta3 folder
 
-Step 4 - Run command to create secret necessary to access Corda images in repository (Run on Azure VM - replace values with your own container registry if needed)
+```
+export C5_DEPS = your_local_path/c5_beta3_hc01/beta3
+```
 
-kubectl create secret -n corda docker-registry cred04 --docker-server c5diagnosticsregistry.azurecr.io --docker-username C5DiagnosticsRegistry --docker-password "Mac83jbBp0EnIU+OnfOPbK5hVHXdSV02Rjx7quoIDT+ACRCI1K4y"
+## Step 7 - get the initial_admin_user password (run this on the VM with the deployed cluster)
 
-Step 5 - Install Kafka (Run on Azure VM)
+```
+ kubectl get secret -n corda corda-initial-admin-user -o jsonpath='{.data.password}'| base64 --decode
+ ```
 
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install kafka bitnami/kafka --version 19.1.0 --values yaml_files/kafka.yaml --wait
+## Step 8 - assign the password extracted from step 7 into the gradle.properties file under c5-cordapp-sample-kotlin folder
 
-Step 6 - Install Postgres (run on Azure VM)
+```
+cordaRpcPasswd=[password]
+```
 
-helm install postgres bitnami/postgresql --wait  --values yaml_files/postgres.yaml --wait
+## Step 9 - run the following command to connect to the remote VM and direct the 1443 port output on the VM to same 1443 port on your local machine
 
-Step 7 - Install Corda (run on Azure VM)
+```
+ssh -i [PEM file] -gL 1443:localhost:1443 azureuser@[VM IP]
+```
 
-helm upgrade --install corda corda  --values yaml_files/corda.yaml --wait
+## Step 10 - run command on the remote VM to forward traffic on port 1443 to the rest worker service on port 443 
 
-Step 8 - Run kubectl command (on Azure VM) to verify status is ok
+```
+port-forward svc/corda-rest-worker 1443:443
+```
 
-kubectl get pods
+## Step 11 - run steps to deploy the Cordapp 
 
-Expected result - you should see a set of pods similar to below
-
-NAME                                             READY   STATUS      RESTARTS       AGE
-corda-create-topics-6xblk                        0/1     Completed   0              2d4h
-corda-crypto-worker-74ccdf9675-f5qks             1/1     Running     0              2d4h
-corda-db-worker-7674f6bc69-f5jzv                 1/1     Running     0              2d4h
-corda-flow-worker-797bcb9d9-2spgv                1/1     Running     0              47h
-corda-membership-worker-8554b4866f-jf9gf         1/1     Running     0              2d4h
-corda-p2p-gateway-worker-666fc6cd9d-pvgn4        1/1     Running     0              2d4h
-corda-p2p-link-manager-worker-568844f7cb-5cn89   1/1     Running     0              2d4h
-corda-rest-worker-b98f8c78f-dwwzh                1/1     Running     0              2d4h
-corda-setup-db-xtvrd                             0/1     Completed   0              2d4h
-corda-setup-rbac-hfzhm                           0/3     Completed   0              2d4h
-kafka-0                                          1/1     Running     1 (2d4h ago)   2d4h
-kafka-zookeeper-0                                1/1     Running     0              2d4h
-postgres-postgresql-0                            1/1     Running     0              2d4h
+cd [your_local_path]/c5-cordapp-sample-kotlin
+./gradlew clean build
+cd [your_local_path]/c5-cordapp-sample-kotlin/concert-scenario-workflows 
+../gradlew :concert-scenario-workflows:1-createGroupPolicy
+../gradlew :concert-scenario-workflows:2-createKeyStore
+../gradlew :concert-scenario-workflows:3-buildCPIs
+../gradlew :concert-scenario-workflows:4-deployCPIs
+../gradlew :concert-scenario-workflows:5-createAndRegVNodes
 
 
