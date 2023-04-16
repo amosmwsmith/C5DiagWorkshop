@@ -82,6 +82,7 @@ port-forward svc/corda-rest-worker 1443:443
 
 ## Step 11 - run steps to deploy the Cordapp 
 
+```
 cd [your_local_path]/c5-cordapp-sample-kotlin
 ./gradlew clean build
 cd [your_local_path]/c5-cordapp-sample-kotlin/concert-scenario-workflows 
@@ -90,5 +91,5 @@ cd [your_local_path]/c5-cordapp-sample-kotlin/concert-scenario-workflows
 ../gradlew :concert-scenario-workflows:3-buildCPIs
 ../gradlew :concert-scenario-workflows:4-deployCPIs
 ../gradlew :concert-scenario-workflows:5-createAndRegVNodes
-
+```
 

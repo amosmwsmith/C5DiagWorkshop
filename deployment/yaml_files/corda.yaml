@@ -1,5 +1,5 @@
 image:
-  registry: "c5diagnosticsregistry.azurecr.io"
+  registry: "c5diagnostcsregistry.azurecr.io"
   tag: "5.0.0.0-Beta3-HC01"
 imagePullSecrets:
   - cred04

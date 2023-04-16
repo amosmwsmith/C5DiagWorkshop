@@ -40,17 +40,16 @@ sudo docker run hello-world
 sudo usermod -aG docker $USER
 newgrp docker
 
-5. Configure Minikube Resources and start
-
-minikube config set cpus 8 
-minikube config set memory 32105
-minikube delete
-minikube start
-
-6. Install Helm
+5. Install Helm
 
 wget https://get.helm.sh/helm-v3.9.3-linux-amd64.tar.gz 
 tar xvf helm-v3.9.3-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin
 rm helm-v3.9.3-linux-amd64.tar.gz 
+
+6. Start Minikube
+
+minikube start
+
+
 
