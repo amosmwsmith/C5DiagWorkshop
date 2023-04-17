@@ -55,19 +55,19 @@ kubectl create secret -n corda docker-registry cred04 --docker-server c5diagnost
 
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install kafka bitnami/kafka --version 19.1.0 --values ~/C5DiagWorkshop-main/deployment/yaml_files/kafka.yaml --wait
+helm install kafka bitnami/kafka --version 19.1.0 --values ~/C5DiagWorkshop/deployment/yaml_files/kafka.yaml --wait
 ```
 
 ## Step 6 - Install Postgres (run on Azure VM)
 
 ```
-helm install postgres bitnami/postgresql --wait  --values ~/C5DiagWorkshop-main/deployment/yaml_files/postgres.yaml --wait
+helm install postgres bitnami/postgresql --wait  --values ~/C5DiagWorkshop/deployment/yaml_files/postgres.yaml --wait
 ```
 
 ## Step 7 - Install Corda (run on Azure VM)
 
 ```
-helm upgrade --install corda corda-0.4.0.tgz --values ~/C5DiagWorkshop-main/deployment/yaml_files/corda.yaml --wait
+helm upgrade --install corda corda-0.4.0.tgz --values ~/C5DiagWorkshop/deployment/yaml_files/corda.yaml --wait
 ```
 
 ## Step 8 - Run kubectl command (on Azure VM) to verify status is ok
