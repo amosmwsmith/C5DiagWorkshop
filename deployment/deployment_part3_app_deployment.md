@@ -3,7 +3,7 @@
 ## Step 1 - download the CorDapp from the repository to your local machine in a new folder named "c5_beta3_hc01"
 
 ```
-https://github.com/amosmwsmith/C5DiagWorkshop/blob/main/deployment/cordapp/c5-cordapp-sample-kotlin.zip
+wget https://github.com/amosmwsmith/C5DiagWorkshop/blob/main/deployment/cordapp/c5-cordapp-sample-kotlin.zip
 ```
 
 ## Step 2 - cd into that folder and extract the contents of the zip into that folder
@@ -72,6 +72,14 @@ ssh -i [PEM file] -gL 1443:localhost:1443 azureuser@[VM IP]
 
 ```
 port-forward svc/corda-rest-worker 1443:443
+```
+## Step 10 - run CLI command 
+
+```
+cd /home/azureuser/c5_beta3_hc01/beta3/net/corda/cli/deployment/corda-cli-installer/5.0.0.0-Beta3-HC01
+unzip corda-cli-installer-5.0.0.0-Beta3-HC01.zip
+chmod 755 install.sh
+./install.sh
 ```
 
 ## Step 11 - run steps to deploy the Cordapp (on your local development machine)
