@@ -54,6 +54,7 @@ export C5_DEPS = your_local_path/c5_beta3_hc01/beta3
 
 ```
  kubectl get secret -n corda corda-initial-admin-user -o jsonpath='{.data.password}'| base64 --decode
+ echo
  ```
 
 ## Step 7 - assign the password extracted from step 7 into the gradle.properties file under c5-cordapp-sample-kotlin folder
