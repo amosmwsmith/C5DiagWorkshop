@@ -88,6 +88,7 @@ N.B before running below steps make sure you have Java 11 installed (Now you mus
 
 ```
 cd [your_local_path]/c5-cordapp-sample-kotlin
+chmod 755 gradlew
 ./gradlew clean build
 cd [your_local_path]/c5-cordapp-sample-kotlin/concert-scenario-workflows 
 ../gradlew :concert-scenario-workflows:1-createGroupPolicy
