@@ -71,9 +71,9 @@ ssh -i [PEM file] -gL 1443:localhost:1443 azureuser@[VM IP]
 ## Step 9 - run command on the remote VM to forward traffic on port 1443 to the rest worker service on port 443 
 
 ```
-port-forward svc/corda-rest-worker 1443:443
+kubectl port-forward svc/corda-rest-worker 1443:443
 ```
-## Step 10 - run CLI command 
+## Step 10 - run CLI command (run this on your local machine)
 
 ```
 cd /home/azureuser/c5_beta3_hc01/beta3/net/corda/cli/deployment/corda-cli-installer/5.0.0.0-Beta3-HC01
