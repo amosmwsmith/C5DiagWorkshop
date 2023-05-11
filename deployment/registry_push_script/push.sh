@@ -9,7 +9,7 @@ declare -a images=(
  "corda-os-member-worker" "corda-os-p2p-gateway-worker"
  "corda-os-p2p-link-manager-worker" "corda-os-db-worker"
  "corda-os-crypto-worker" "corda-os-plugins" )
-tag=5.0.0.0-Beta3-HC01
+tag=5.0.0.0-Beta3-HC03
 target_registry=$1
 
 for image in "${images[@]}"; do
