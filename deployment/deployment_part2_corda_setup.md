@@ -5,13 +5,13 @@
 ### 1. Download the worker images:	
 
 ```
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-worker-images-Beta3-HC01.tar
+wget https://staging.download.corda.net/c5-release-pack/5582b6dd-5cd4-45a1-8b16-cd9f7fa09737-Hawk1.0-RC03/corda-worker-images-Hawk1.0-RC03.tar
 ```
 
 ### 2. Load the docker images into your local docker instance:
 
 ```
-docker load -i corda-worker-images-Beta3-HC01.tar
+docker load -i corda-worker-images-Hawk1.0-RC03.tar
 ```
 
 ### 3. Log into your container registry:
@@ -32,10 +32,10 @@ git clone git@github.com:amosmwsmith/C5DiagWorkshop.git
 ./push.sh
 ```
 
-## Step 2: Download the helm charts for Beta3 HC01 (Run on the Azure VM):
+## Step 2: Download the helm charts for Beta3 HC03 (Run on the Azure VM):
 
 ```
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-0.4.0.tgz
+wget https://staging.download.corda.net/c5-release-pack/5582b6dd-5cd4-45a1-8b16-cd9f7fa09737-Hawk1.0-RC03/corda-5.0.0-beta.3-RC.3.tgz
 ```
 
 ## Step 3 - Create namespace corda and set as default (Run on Azure VM)
