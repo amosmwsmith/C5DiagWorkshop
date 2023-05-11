@@ -1,6 +1,6 @@
 # C5DiagWorkshop Deployment Steps - CORDAPP DEPLOYMENT
 
-## Step 1 - download the CorDapp from the repository to your local machine in a new folder named "c5_beta3_hc01"
+## Step 1 - download the CorDapp from the repository to your local machine in a new folder named "c5_beta3_hc03"
 
 ```
 wget https://github.com/amosmwsmith/C5DiagWorkshop/blob/main/deployment/cordapp/c5-cordapp-sample-kotlin.zip
@@ -14,40 +14,40 @@ wget https://github.com/amosmwsmith/C5DiagWorkshop/blob/main/deployment/cordapp/
 
 ### 1. Download Helm charts (on your local machine)
 ```
-   wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-0.4.0.tgz 
+   wget https://staging.download.corda.net/c5-release-pack/5582b6dd-5cd4-45a1-8b16-cd9f7fa09737-Hawk1.0-RC03/corda-5.0.0-beta.3-RC.3.tgz 
 ```
 
 ### 2. Download Dev Pack
 ```
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/cordApp-dev-pack-Beta3-HC01.tar.gz
+wget https://staging.download.corda.net/c5-release-pack/5582b6dd-5cd4-45a1-8b16-cd9f7fa09737-Hawk1.0-RC03/cordApp-dev-pack-Hawk1.0-RC03.tar.gz
 ```
 
 ### 3. Download Worker Images
 ```
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/corda-worker-images-Beta3-HC01.tar
+wget https://staging.download.corda.net/c5-release-pack/5582b6dd-5cd4-45a1-8b16-cd9f7fa09737-Hawk1.0-RC03/corda-worker-images-Hawk1.0-RC03.tar
 ```
 
 ### 4. Download Platform Jars
 ```
-wget https://staging.download.corda.net/c5-release-pack/e7a4dbd4-2694-4ba9-b931-8f9340267b4f-Beta3-HC01/platform-jars-Beta3-HC01.tar.gz
+wget https://staging.download.corda.net/c5-release-pack/5582b6dd-5cd4-45a1-8b16-cd9f7fa09737-Hawk1.0-RC03/platform-jars-Hawk1.0-RC03.tar.gz
 ```
 
 ### 5. Extract platform jars
 
 ```
-tar -xzvf  platform-jars-Beta3-HC01.tar.gz
+tar -xzvf  platform-jars-Hawk1.0-RC03.tar.gz
 ```
 
 ### 6. Extract Dev Pack
 
 ```
-tar -xzvf  cordApp-dev-pack-Beta3-HC01.tar.gz
+tar -xzvf  cordApp-dev-pack-Hawk1.0-RC03.tar.gz
 ```
 
 ## Step 5 - create environment variable to store the path to the beta3 folder
 
 ```
-export C5_DEPS = your_local_path/c5_beta3_hc01/beta3
+export C5_DEPS = your_local_path/c5_beta3_hc03/beta3
 ```
 
 ## Step 6 - get the initial_admin_user password (run this on the VM with the deployed cluster)
@@ -76,8 +76,8 @@ kubectl port-forward svc/corda-rest-worker 1443:443
 ## Step 10 - run CLI command (run this on your local machine)
 
 ```
-cd /home/azureuser/c5_beta3_hc01/beta3/net/corda/cli/deployment/corda-cli-installer/5.0.0.0-Beta3-HC01
-unzip corda-cli-installer-5.0.0.0-Beta3-HC01.zip
+cd /home/azureuser/c5_beta3_hc03/beta3/net/corda/cli/deployment/corda-cli-installer/5.0.0.0-Hawk1.0-RC03/corda-cli-installer-5.0.0.0-Hawk1.0-RC03
+unzip corda-cli-installer-5.0.0.0-Hawk1.0-RC03.zip
 chmod 755 install.sh
 ./install.sh
 ```
