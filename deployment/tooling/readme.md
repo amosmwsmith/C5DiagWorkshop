@@ -55,7 +55,7 @@ These are the possible parameters for each flow entry:
 	flowClassName: the full class path to the flow to be checked / submitted
 	clientRequestId: the unique identifier for the submitted flow
 
-4. flowParams: this is an array of key value pairs. Each entry int he array is a paremeter name with the value for that flow parameter:
+4. flowParams: this is an array of key value pairs. Each entry int the array is a paremeter name with the value for that flow parameter:
 
 5. depends: this an optional setting. If specified it must contain an array of 3 key value pairs, each entry in the array represents a dependency of a specific input to the flow from a previous flow's result.
 For each entry in the array:
