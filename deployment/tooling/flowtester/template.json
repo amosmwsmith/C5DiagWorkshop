@@ -1,0 +1,61 @@
+{
+	"endpoint": "https://localhost:1443/api/v1/flow/",
+	"authToken": "YWRtaW46QmlWM2N3V2xnWWRo",
+	"vnodes": ["FF589770AA64"],
+	"pollInterval": 5,		
+	"flowSequence": [{
+			"vnode": "FF589770AA64",
+			"pollTimeout": 120,
+			"flowData": {
+				"flowClassName": "com.r3.ps.samples.concert.workflow.CashTokenIssueFlow",
+				"clientRequestId": "issue-cash-token-b4-1"
+			},
+			"flowParams": {
+				"value": 10,
+				"issuer": "CN=PSP1,OU=Test Dept, O=R3, L=London, C=GB"
+			}
+		},
+		{
+			"vnode": "FF589770AA64",
+			"pollTimeout": 120,
+			"flowData": {
+				"flowClassName": "com.r3.ps.samples.concert.workflow.CreateWalletFlow",
+				"clientRequestId": "create-wallet-b4-1"
+			},
+			"flowParams": {
+				"ownerName": "Payee-1"
+			}
+		},
+		{
+			"vnode": "FF589770AA64",
+			"pollTimeout": 120,
+			"depends": [{
+				"id": "issue-cash-token-b4-1",
+				"outputField": "flowResult",
+				"inputField": "tokenId"				
+			},
+			{
+				"id": "create-wallet-b4-1",
+				"outputField": "flowResult",
+				"outputSubField": "id",
+				"inputField": "walletId"				
+			}			
+			],
+			"flowData": {
+				"flowClassName": "com.r3.ps.samples.concert.workflow.DepositCashToken",
+				"clientRequestId": "deposit-wallet-b4-1"
+			},
+			"flowParams": {
+				"amount": "2"
+			},
+			"expectedResults": [
+			 { 
+				"value": 3.0,
+				"outputField": "flowResult",
+				"outputSubField": "cashBalance" 
+			 }
+			]
+		}				
+	]
+
+}
